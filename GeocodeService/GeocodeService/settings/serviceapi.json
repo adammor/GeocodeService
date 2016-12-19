@@ -1,0 +1,210 @@
+{
+    "generalSettings": [
+        {
+            "roundRobin": [
+                {
+                    "direction": "Forward"
+                },
+                {
+                    "direction": "Random"
+                },
+                {
+                    "direction": "Fixed"
+                }
+            ],
+
+            "retry": [
+                {
+                    "numOfRetries": 3,
+                    "secondsDelay": 5
+                }
+            ]
+        }
+    ],
+    "services": [
+        {
+            "API": [
+                {
+                    "type": "Geocode - forward",
+                    "description": "Retrieves geocodes (lat/lng) for street addresses",
+                    "providers": [
+                        {
+                            "APIName": "Google Maps Geocoding API",
+                            "GUID": "29DD2B59-9726-48C8-A215-EB97342D606F",
+                            "discontinued": false,
+                            "comments": null,
+                            "dependencies": [
+                                "GeocodeModule",
+                                "/providers/GoogleMaps.cs",
+                                "/model/StreetAddress.cs"
+                            ],
+                            "endpoint": {
+                                "protocol": "https",
+                                "baseURL": "maps.googleapis.com/maps/api/geocode",
+                                "responseFormat": "json",
+                                "key": "AIzaSyCV2gnV9dupN53QF6Un3AkteSJJEeHot8Q",
+                                "keylessTestAllowed": true,
+                                "parameter": "address",
+                                "usageLimits": [
+                                    {
+                                        "planType": "standard",
+                                        "requestQuota": [
+                                            {
+                                                "second": 50,
+                                                "day": 2500
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "planType": "premium",
+                                        "requestQuota": [
+                                            {
+                                                "second": 50,
+                                                "day": 100000
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+
+                        {
+                            "APIName": "Bing Maps API",
+                            "GUID": "F3746743-643A-4B7E-B147-505621BD6E34",
+                            "discontinued": false,
+                            "comments": "Microsoft has deprecated this service - best to use for large, one-time updates only",
+                            "dependencies": [
+                                "GeocodeModule",
+                                "/providers/BingMaps.cs",
+                                "/model/StreetAddress.cs"
+                            ],
+                            "endpoint": {
+                                "protocol": "http",
+                                "baseURL": "dev.virtualearth.net/REST/v1/Locations",
+                                "responseFormat": "json",
+                                "key": "ApPs_W40o4wbxqypPKN3DtnooYoZj3n9-L7czuqkSnPvs8lkRcPS63mPiqyWJ48P",
+                                "keylessTestAllowed": true,
+                                "parameter": null,
+                                "usageLimits": [
+                                    {
+                                        "planType": "standard",
+                                        "requestQuota": [
+                                            {
+                                                "day": 50000,
+                                                "year": 1000000
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "APIName": "OpenStreetMap API",
+                            "GUID": "9EAD8758-7677-4F9E-AC8E-CD988E1A9047",
+                            "discontinued": false,
+                            "comments": "CAUTION: many inaccurate geocodes;crowdsourced",
+                            "endpoint": {
+                            }
+                        },
+                        {
+                            "APIName": "OpenAddresses API",
+                            "GUID": "9EAD8758-7677-4F9E-AC8E-CD988E1A9047",
+                            "discontinued": false,
+                            "comments": "CAUTION: many inaccurate geocodes;open sourced",
+                            "endpoint": {
+                            }
+                        },
+                        {
+                            "APIName": "MapBox API",
+                            "GUID": "D790C03B-F591-4A75-9B3C-F99FDC9247F7",
+                            "discontinued": false,
+                            "comments": "CAUTION: Mapbox uses OpenAddresses",
+                            "endpoint": {
+                            }
+                        },
+                        {
+                            "APIName": "Yahoo PlaceFinder API",
+                            "GUID": "2855BB86-BA35-42B4-84FC-41070E738D0A",
+                            "discontinued": true,
+                            "comments": null,
+                            "endpoint": {
+                                "protocol": "https",
+                                "baseURL": "yboss.yahooapis.com/geo/placefinder",
+                                "key": null
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "Geocode - reverse",
+                    "description": "Retrieves street addresses from geocodes (lat/lng)",
+                    "providers": [
+                        {
+                            "APIName": "Google Maps Geocoding API",
+                            "GUID": "3E9DACD9-E67F-4EBC-80F7-B04DF5F6D8C6",
+                            "discontinued": false,
+                            "comments": null,
+                            "endpoint": {
+                                "protocol": "https",
+                                "baseURL": "maps.googleapis.com/maps/api/geocode",
+                                "responseFormat": "json",
+                                "key": "AIzaSyCV2gnV9dupN53QF6Un3AkteSJJEeHot8Q",
+                                "parameter": "latlng",
+                                "usageLimits": [
+                                    {
+                                        "planType": "standard",
+                                        "requestQuota": [
+                                            {
+                                                "second": 50,
+                                                "day": 2500
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "planType": "premium",
+                                        "requestQuota": [
+                                            {
+                                                "second": 50,
+                                                "day": 100000
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+"repositories": {
+        "sourceList": [
+                {
+                    "name": "MSSQLsrc",
+                    "connectionString": "Data Source=.\\SQLEXPRESS;Initial Catalog=GDLMarketingCampaign; Integrated Security=SSPI;;Connection Timeout=120",
+                    "providerName": "System.Data.SqlClient",
+                    "getQuery": "SELECT ga.DoctorID, ga.[Address], ga.City, ga.Region, ga.Country, ga.PostalCode FROM [dbo].[GeocodeAccount] AS ga WITH (NOLOCK) WHERE ga.Latitude IS NULL ORDER BY ga.[RecordUpdatedLocalDTS] ASC"
+                },
+                {
+                    "name": "MySQLsrc",
+                    "connectionString": "Server=dev-gl-docker1.glidewelllab.local;Port=63502;Database=Marketing; Uid=root; Pwd=Password#; default command timeout=120",
+                    "providerName": "MySql.Data.MySqlClient",
+                    "getQuery": "SELECT ga.DoctorID, ga.`Address`, ga.City, ga.Region, ga.Country, ga.PostalCode FROM GeocodeAccount AS ga WHERE ga.Latitude IS NULL ORDER BY ga.RecordUpdatedLocalDTS ASC"
+                }
+        ],
+        "targetList": [
+                {
+                    "name": "MSSQLtrg",
+                    "connectionString": "Data Source=.\\SQLEXPRESS;Initial Catalog=GDLMarketingCampaign; Integrated Security=SSPI;;Connection Timeout=120",
+                    "providerName": "System.Data.SqlClient",
+                    "updateQuery": "UPDATE ga SET LocationType = @LocationType, Latitude = @Latitude, Longitude = @Longitude, ServiceAPIEndPointUID = @ServiceAPIEndPointUID, SRID = @SRID FROM [dbo].[GeocodeAccount] AS ga WHERE ga.DoctorID = @DoctorID"
+                },
+                {
+                    "name": "MySQLtrg",
+                    "connectionString": "Server=dev-gl-docker1.glidewelllab.local;Port=63502;Database=Marketing; Uid=root; Pwd=Password#; default command timeout=120",
+                    "providerName": "MySql.Data.MySqlClient",
+                    "updateQuery": "UPDATE GeocodeAccount SET LocationType = @LocationType, Latitude = @Latitude, Longitude = @Longitude, ServiceAPIEndPointUID = @ServiceAPIEndPointUID, SRID = @SRID WHERE DoctorID = @DoctorID;"
+                }
+        ]
+    }
+}

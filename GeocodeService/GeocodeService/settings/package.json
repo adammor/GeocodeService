@@ -1,0 +1,24 @@
+{
+    "settings": {
+
+        "generalSettingsSelected": {
+            "runOptions": [
+                {
+                    "roundRobin": "Forward"
+                }
+            ]
+        },
+
+        "APISelected": {
+            "type": "Geocode - forward",
+            "APIName": "Google Maps Geocoding API",
+            "planType": "standard"
+        },
+
+        "repositorySelected": {
+            "Source": "MSSQLsrc",
+            "Target": "MSSQLtrg"
+        }
+
+    }
+}
